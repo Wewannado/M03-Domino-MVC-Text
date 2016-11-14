@@ -1,8 +1,8 @@
 package domino.model;
 
 public class Torn {
-    private Joc joc;
 
+    private Joc joc;
 
     public Torn(Joc joc) {
         this.joc = joc;
@@ -26,16 +26,18 @@ public class Torn {
     public boolean colocarDosDobles(Fitxa d1, boolean extrem1, Fitxa d2,
             boolean extrem2) {
         boolean correcte = false;
-
         if (isDoble(d1) && isDoble(d2)) {
-            correcte = colocarUnaFitxa(d1, extrem1)
-                    && colocarUnaFitxa(d2, extrem2);
+            if (comprovaFitxa(d1, extrem1) && comprovaFitxa(d2, extrem2)) {
+                correcte = colocarUnaFitxa(d1, extrem1)
+                        && colocarUnaFitxa(d2, extrem2);
+            }
         }
-         this.joc.setComptPassar(0);
+        this.joc.setComptPassar(0);
         return correcte;
     }
-    public void passar(){
-        joc.setComptPassar( joc.getComptPassar()+1);
+
+    public void passar() {
+        joc.setComptPassar(joc.getComptPassar() + 1);
     }
 
     public void inicial() {
