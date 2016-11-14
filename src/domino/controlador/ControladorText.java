@@ -37,10 +37,12 @@ public class ControladorText {
         vista.mostrarMissatge("\n\nInici del joc\n");
         torn = new Torn(joc);
         torn.inicial();
+        joc.actualitzarEstat();
         while (!joc.isFinalitzat()) {
             vista.mostrarMissatge("Torn:" + joc.getTorn() + "   Jugador: "+joc.getJugadors()[joc.getTorn()].getNom());
             mostrarTauler();
             respostaOpcioMenu();
+            joc.actualitzarEstat();
         }
         vista.mostrarMissatge("Fi de la partida. El guanyador es: "+joc.getGuanyador().getNom());
     }
@@ -74,7 +76,7 @@ public class ControladorText {
                     break;
             }
         }
-        joc.actualitzarEstat();
+
 
     }
     private void mostrarTauler(){
