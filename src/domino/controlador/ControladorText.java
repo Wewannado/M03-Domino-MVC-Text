@@ -6,7 +6,7 @@
 package domino.controlador;
 
 import domino.model.Fitxa;
-import domino.vista.Vista;
+import domino.vista.VistaText;
 import domino.model.Joc;
 import domino.model.Torn;
 
@@ -18,18 +18,19 @@ import domino.model.Torn;
 public class ControladorText {
 
     private int nombre_jugadors;
-    private Vista vista;
+    private VistaText vista;
     private Joc joc;
     private Torn torn;
 
     public ControladorText() {
-        this.vista = new Vista();
+        this.vista = new VistaText();
         inicialitza();
     }
 
     public void inicialitza() {
         this.nombre_jugadors = vista.entrarUnNumero("Introdueix el numero de Jugadors");
         this.joc = new Joc(nombre_jugadors, 28, 7);
+        
         joc.iniciar(vista.demanarNomsJugadors(nombre_jugadors));
     }
 

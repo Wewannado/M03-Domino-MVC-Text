@@ -6,20 +6,28 @@ import java.util.List;
 public  class Jugador {
     private String nom;
     private List<Fitxa> fitxes;
+    private boolean IAControlled;
 
-    public Jugador( String nom) {      
+    public Jugador(String nom) {      
         this.nom = nom;
         fitxes = new ArrayList();
     } 
     
-      public Jugador( String nom, List<Fitxa> Fitxes) {      
+      public Jugador( String nom, List<Fitxa> Fitxes, boolean IAControlled) {      
         this.nom = nom;
         this.fitxes=Fitxes;
+        this.IAControlled=IAControlled;
     }   
 
     public String getNom() {
         return nom;
     }
+
+    public boolean isIAControlled() {
+        return IAControlled;
+    }
+    
+    
 
     public List<Fitxa> getFitxes() {
        return fitxes;

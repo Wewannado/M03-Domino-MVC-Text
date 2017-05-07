@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author Roger G. Coscojuela
  */
-public class Vista {
+public class VistaText {
 
     Scanner lector = new Scanner(System.in);
 
