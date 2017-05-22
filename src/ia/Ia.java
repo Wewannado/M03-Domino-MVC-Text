@@ -29,11 +29,11 @@ public class Ia {
         for (Fitxa llistaFitxe : llistaFitxes) {
             if (torn.colocarUnaFitxa(llistaFitxe, true)) {
                 haTirat = true;
-                System.out.println(joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
+                System.out.println("IA:"+joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
                 break;
             } else if (torn.colocarUnaFitxa(llistaFitxe, true)) {
                 haTirat = true;
-                System.out.println(joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
+                System.out.println("IA:"+joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
                 break;
             }
         }

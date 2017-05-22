@@ -49,6 +49,7 @@ public class Tauler extends javax.swing.JPanel {
         JPanel westJpanel = new JPanel();
         westJpanel.setBackground(this.getBackground());
         westJpanel.setLayout(new BoxLayout(westJpanel, BoxLayout.Y_AXIS));
+        
         for (Fitxa fitxe : fitxes) {
             BotoFitxa fitxa = new BotoFitxa();
             fitxa.setValue(fitxe.getValors());
@@ -80,13 +81,13 @@ public class Tauler extends javax.swing.JPanel {
                 fitxa.setOpaque(false);
                 southJpanel.add(fitxa);
             } else {
-                ImageIcon icon = new ImageIcon("assets/" + fitxe.getValors()[0] + fitxe.getValors()[1] + "v.png");
+                ImageIcon icon = new ImageIcon("assets/" + fitxe.getValors()[1] + fitxe.getValors()[0] + "v.png");
                 fitxa.setIcon(icon);
                 fitxa.setBorderPainted(false);
                 fitxa.setContentAreaFilled(false);
                 fitxa.setFocusPainted(false);
                 fitxa.setOpaque(false);
-                westJpanel.add(fitxa);
+                westJpanel.add(fitxa,0);
             }
 
             count++;
