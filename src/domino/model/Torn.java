@@ -16,7 +16,10 @@ public class Torn {
             } else {
                 joc.getFitxesJugades().addLast(f);
             }
-            joc.getJugadors()[joc.getTorn()].colocarFitxa(f);
+            System.out.println(f.toString());
+            if(joc.getJugadors()[joc.getTorn()].colocarFitxa(f)){
+                System.out.println("Fitxa eliminada pel JOC");
+            }
             joc.setComptPassar(0);
             correcte = true;
         }

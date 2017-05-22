@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.util.ArrayDeque;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,9 +27,6 @@ public class VistaGrafica extends javax.swing.JFrame {
     PanellJugador pUser3;
     PanellJugador pUser4;
     Tauler tauler;
-
-    JLabel user3NomLabel;
-    JLabel user4NomLabel;
 
     /**
      * Creates new form VistaGrafica
@@ -62,7 +60,8 @@ public class VistaGrafica extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
         this.getContentPane().setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(700, 500));
+        this.setResizable(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         this.pack();
@@ -76,8 +75,8 @@ public class VistaGrafica extends javax.swing.JFrame {
         this.pUser1.repinta();
         this.pUser2.repinta();
     }
-    
-        public void actualitzarEstat(ArrayDeque<Fitxa> FitxesEntauler, List<Fitxa> jugador1, List<Fitxa> jugador2, List<Fitxa> jugador3, List<Fitxa> jugador4) {
+
+    public void actualitzarEstat(ArrayDeque<Fitxa> FitxesEntauler, List<Fitxa> jugador1, List<Fitxa> jugador2, List<Fitxa> jugador3, List<Fitxa> jugador4) {
         this.tauler.setFitxes(FitxesEntauler);
         this.tauler.refresca();
         this.pUser1.setFitxes(jugador1);
@@ -88,6 +87,8 @@ public class VistaGrafica extends javax.swing.JFrame {
         this.pUser2.repinta();
         this.pUser3.repinta();
         this.pUser4.repinta();
+        this.revalidate();
+        this.repaint();
     }
 
     public void inicialitzarTauler() {
@@ -100,16 +101,15 @@ public class VistaGrafica extends javax.swing.JFrame {
 
         //Crreem y posicionem els jugadors al tauler.
         if (getNomsJugadors().length == 2) {
-            pUser1 = new PanellJugador(BorderLayout.SOUTH, false, false, control);
+            pUser1 = new PanellJugador(BorderLayout.SOUTH, false, true, control);
             pUser2 = new PanellJugador(BorderLayout.NORTH, config.getIA(), config.getMostrarFitxes(), control);
-
             pUser1.setBackground(Color.yellow);
             pUser2.setBackground(Color.BLUE);
 
             this.getContentPane().add(pUser1, BorderLayout.SOUTH);
             this.getContentPane().add(pUser2, BorderLayout.NORTH);
         } else {
-            pUser1 = new PanellJugador(BorderLayout.SOUTH, false, false, control);
+            pUser1 = new PanellJugador(BorderLayout.SOUTH, false, true, control);
             pUser2 = new PanellJugador(BorderLayout.EAST, config.getIA(), config.getMostrarFitxes(), control);
             pUser3 = new PanellJugador(BorderLayout.NORTH, config.getIA(), config.getMostrarFitxes(), control);
             pUser4 = new PanellJugador(BorderLayout.WEST, config.getIA(), config.getMostrarFitxes(), control);
@@ -124,7 +124,7 @@ public class VistaGrafica extends javax.swing.JFrame {
             this.getContentPane().add(pUser3, BorderLayout.NORTH);
             this.getContentPane().add(pUser4, BorderLayout.WEST);
         }
-        tauler.setBackground(Color.DARK_GRAY);
+        
         this.getContentPane().add(tauler, BorderLayout.CENTER);
         for (int i = 0; i < getNomsJugadors().length; i++) {
             setNomJugador(i, getNomsJugadors()[i]);
@@ -139,6 +139,44 @@ public class VistaGrafica extends javax.swing.JFrame {
 
     public String[] getNomsJugadors() {
         return config.getJugadors();
+    }
+
+    public boolean isCPUControlled(int Jugador) {
+        boolean result = false;
+        switch (Jugador) {
+            case 0:
+                result = pUser1.isIAControlled();
+                break;
+            case 1:
+                result = pUser2.isIAControlled();
+                break;
+            case 2:
+                result = pUser3.isIAControlled();
+                break;
+            case 3:
+                result = pUser4.isIAControlled();
+                break;
+        }
+        return result;
+    }
+
+    public void mostrarMissatge(String missatge) {
+        JOptionPane.showMessageDialog(this,
+                missatge);
+    }
+
+    public boolean demanarCostat() {
+        Object[] options1 = {"Esquerra", "Dreta"};
+
+        int dialogResult = JOptionPane.showOptionDialog(this,
+                "A quin canto vols colocar la fitxa?",
+                "La resposta al sentit de la vida l'univers i tot el que resta",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options1,
+                options1[1]);
+        return dialogResult == 0;
     }
 
     public void setFitxesJugador(int jugador, List<Fitxa> fitxes) {

@@ -44,7 +44,7 @@
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="etJugador4" pref="261" max="32767" attributes="0"/>
                                       <Component id="etJugador3" max="32767" attributes="0"/>
-                                      <Component id="etJugador2" max="32767" attributes="0"/>
+                                      <Component id="etJugador2" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
@@ -158,12 +158,25 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="etJugador1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jugador 1"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="etJugador2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jugador 2"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="etJugador3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jugador 3"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="etJugador4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jugador 4"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btNoms">
       <Properties>
@@ -176,7 +189,6 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCBIa">
       <Properties>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="IA"/>
       </Properties>
       <Events>

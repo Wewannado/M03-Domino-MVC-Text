@@ -4,7 +4,10 @@
 package domino.vista;
 
 import domino.controlador.ControladorGrafic;
+import static java.lang.System.err;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +30,12 @@ public class Config extends javax.swing.JFrame {
         initComponents();
         this.control = control;
         btNoms.addActionListener(control);
+        if (jRB2Jug.isSelected()) {
+            etJugador3.setVisible(false);
+            etJugador4.setVisible(false);
+            jLabelJugador3.setVisible(false);
+            jLabelJugador4.setVisible(false);
+        }
 
     }
 
@@ -97,6 +106,15 @@ public class Config extends javax.swing.JFrame {
 
         jLabelJugador4.setText("Nom Jugador 4");
 
+        etJugador1.setText("Jugador 1");
+
+        etJugador2.setText("Jugador 2");
+
+        etJugador3.setText("Jugador 3");
+        etJugador3.setToolTipText("");
+
+        etJugador4.setText("Jugador 4");
+
         btNoms.setText("Jugar!");
         btNoms.setActionCommand("btNoms");
         btNoms.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +123,6 @@ public class Config extends javax.swing.JFrame {
             }
         });
 
-        jCBIa.setSelected(true);
         jCBIa.setText("IA");
         jCBIa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,7 +161,7 @@ public class Config extends javax.swing.JFrame {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(etJugador4, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                                         .addComponent(etJugador3)
-                                        .addComponent(etJugador2)))
+                                        .addComponent(etJugador2, javax.swing.GroupLayout.Alignment.TRAILING)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabelJugador1)
                                     .addGap(39, 39, 39)
@@ -224,11 +241,21 @@ public class Config extends javax.swing.JFrame {
 
     private void jRBJugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBJugActionPerformed
         if (evt.getActionCommand().equals("2Jugadors")) {
-            System.out.println("2 jugadors");
-
+            Logger.getLogger(getClass().getName()).log(
+                    Level.CONFIG, "2 jugadors", err);
+            etJugador3.setVisible(false);
+            etJugador4.setVisible(false);
+            jLabelJugador3.setVisible(false);
+            jLabelJugador4.setVisible(false);
         }
-        if (evt.equals("4Jugadors")) {
-            System.out.println("4 jugadors");
+        if (evt.getActionCommand().equals("4Jugadors")) {
+            Logger.getLogger(getClass().getName()).log(
+                    Level.CONFIG, "4 jugadors", err);
+            etJugador3.setVisible(true);
+            etJugador4.setVisible(true);
+            jLabelJugador3.setVisible(true);
+            jLabelJugador4.setVisible(true);
+
         }
     }//GEN-LAST:event_jRBJugActionPerformed
 

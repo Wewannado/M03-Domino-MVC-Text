@@ -41,8 +41,8 @@ public  class Jugador {
         this.fitxes = fitxes;
     }
     
-    public void colocarFitxa(Fitxa f){
-        this.fitxes.remove(f);
+    public boolean colocarFitxa(Fitxa f){
+        return this.fitxes.remove(f);
     }
 
     @Override

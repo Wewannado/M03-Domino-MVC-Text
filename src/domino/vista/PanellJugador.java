@@ -25,7 +25,7 @@ import utils.VerticalLabelUI;
  * @author Roger G. Coscojuela
  */
 public class PanellJugador extends javax.swing.JPanel {
-    
+
     private utils.VerticalLabelUI userNomLabel;
     private String posicio = null;
     private ArrayList<JButton> fitxes = null;
@@ -51,10 +51,10 @@ public class PanellJugador extends javax.swing.JPanel {
         panelFitxes = new JPanel();
         inicialitza();
     }
-    
+
     private void omplirArrayImatgesFitxes() {
     }
-    
+
     private void inicialitza() {
         userNomLabel = new VerticalLabelUI();
         //Si es un layout north o south, la posicio dels components es Y_AXIS
@@ -70,7 +70,7 @@ public class PanellJugador extends javax.swing.JPanel {
                 this.add(userNomLabel);
             }
         } else {
-            
+
             panelFitxes.setLayout(new GridLayout(0, 1));
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
             if (posicio.equals(BorderLayout.WEST)) {
@@ -83,41 +83,75 @@ public class PanellJugador extends javax.swing.JPanel {
                 this.add(userNomLabel);
             }
         }
-        
+
     }
-    
+
     public void setNomJugador(String nom) {
         this.userNomLabel.setText(nom);
     }
-    
+
     public void setFitxes(List<Fitxa> input) {
         fitxes = new ArrayList<>();
         //System.out.println("Añadida fitxa");
         for (Fitxa fitxa : input) {
-            JButton JBfitxa = new JButton();
+            BotoFitxa JBfitxa = new BotoFitxa();
             JBfitxa.setActionCommand("fitxa");
             if (IAControlled == false) {
                 JBfitxa.addActionListener(control);
             }
-            if (posicio.equals(BorderLayout.SOUTH)) {
-                JBfitxa.setText((fitxa.getValors()[0]) + ":" + fitxa.getValors()[1]);
-            } else {
-                if (MostrarFitxes) {
-                    JBfitxa.setText((fitxa.getValors()[0]) + ":" + fitxa.getValors()[1]);
+
+            if (MostrarFitxes) {
+                JBfitxa.setValue(fitxa.getValors());
+                ImageIcon icon;
+                if (posicio.equals(BorderLayout.NORTH) || posicio.equals(BorderLayout.SOUTH)) {
+                    icon = new ImageIcon("assets/" + fitxa.getValors()[0] + fitxa.getValors()[1] + "v.png");
                 } else {
-                    JBfitxa.setText("");
+                    icon = new ImageIcon("assets/" + fitxa.getValors()[0] + fitxa.getValors()[1] + ".png");
                 }
+                JBfitxa.setIcon(icon);
+                JBfitxa.setBorderPainted(false);
+                JBfitxa.setContentAreaFilled(false);
+                JBfitxa.setFocusPainted(false);
+                JBfitxa.setOpaque(false);
+
+//JBfitxa.setText((fitxa.getValors()[0]) + ":" + fitxa.getValors()[1]);
+            } else {
+                ImageIcon icon;
+                if (posicio.equals(BorderLayout.NORTH) || posicio.equals(BorderLayout.SOUTH)) {
+                    icon = new ImageIcon("assets/" + "blackBack" + "v.png");
+                } else {
+                    icon = new ImageIcon("assets/" + "blackBack" + ".png");
+                }
+                JBfitxa.setIcon(icon);
+                JBfitxa.setBorderPainted(false);
+                JBfitxa.setContentAreaFilled(false);
+                JBfitxa.setFocusPainted(false);
+                JBfitxa.setOpaque(false);
+
             }
             this.fitxes.add(JBfitxa);
+
+        }
+        if (!isIAControlled()) {
+            JButton BotoPassar = new JButton();
+            BotoPassar.setActionCommand("passar");
+            BotoPassar.setText("Passar");
+            BotoPassar.addActionListener(control);
+            this.fitxes.add(BotoPassar);
         }
     }
-    
+
     public void repinta() {
         this.panelFitxes.removeAll();
-        System.out.println(this.userNomLabel.getText() + ": Repinto.");
         for (JButton fitxa : fitxes) {
             this.panelFitxes.add(fitxa);
         }
+        this.revalidate();
+        this.repaint();
     }
-    
+
+    public boolean isIAControlled() {
+        return IAControlled;
+    }
+
 }
