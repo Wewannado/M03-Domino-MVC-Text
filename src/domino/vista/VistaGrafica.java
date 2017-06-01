@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayDeque;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -67,6 +66,13 @@ public class VistaGrafica extends javax.swing.JFrame {
         this.pack();
     }
 
+    /**
+     * Actualitza l'estat de tots els layouts. Usat per a dos jugadors
+     *
+     * @param FitxesEntauler
+     * @param jugador1 Llista de fitxes del jugador
+     * @param jugador2 Llista de fitxes del jugador
+     */
     public void actualitzarEstat(ArrayDeque<Fitxa> FitxesEntauler, List<Fitxa> jugador1, List<Fitxa> jugador2) {
         this.tauler.setFitxes(FitxesEntauler);
         this.tauler.refresca();
@@ -76,6 +82,15 @@ public class VistaGrafica extends javax.swing.JFrame {
         this.pUser2.repinta();
     }
 
+    /**
+     * Actualitza l'estat de tots els layouts. Usat per a dos jugadors
+     *
+     * @param FitxesEntauler
+     * @param jugador1 Llista de fitxes del jugador
+     * @param jugador2 Llista de fitxes del jugador
+     * @param jugador3 Llista de fitxes del jugador
+     * @param jugador4 Llista de fitxes del jugador
+     */
     public void actualitzarEstat(ArrayDeque<Fitxa> FitxesEntauler, List<Fitxa> jugador1, List<Fitxa> jugador2, List<Fitxa> jugador3, List<Fitxa> jugador4) {
         this.tauler.setFitxes(FitxesEntauler);
         this.tauler.refresca();
@@ -124,7 +139,7 @@ public class VistaGrafica extends javax.swing.JFrame {
             this.getContentPane().add(pUser3, BorderLayout.NORTH);
             this.getContentPane().add(pUser4, BorderLayout.WEST);
         }
-        
+
         this.getContentPane().add(tauler, BorderLayout.CENTER);
         for (int i = 0; i < getNomsJugadors().length; i++) {
             setNomJugador(i, getNomsJugadors()[i]);
@@ -179,6 +194,11 @@ public class VistaGrafica extends javax.swing.JFrame {
         return dialogResult == 0;
     }
 
+    /**
+     * Seteja les fitxes d'un jugador
+     * @param jugador
+     * @param fitxes 
+     */
     public void setFitxesJugador(int jugador, List<Fitxa> fitxes) {
         switch (jugador) {
             case 0:
@@ -206,19 +226,15 @@ public class VistaGrafica extends javax.swing.JFrame {
         switch (jugador) {
             case 0:
                 pUser1.setNomJugador(nom);
-                System.out.println("Jugador " + jugador + " es:" + nom);
                 break;
             case 1:
                 pUser2.setNomJugador(nom);
-                System.out.println("Jugador " + jugador + " es:" + nom);
                 break;
             case 2:
                 pUser3.setNomJugador(nom);
-                System.out.println("Jugador " + jugador + " es:" + nom);
                 break;
             case 3:
                 pUser4.setNomJugador(nom);
-                System.out.println("Jugador  " + jugador + " es:" + nom);
                 break;
         }
     }

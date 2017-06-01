@@ -6,7 +6,6 @@
 package domino.vista;
 
 import domino.model.Fitxa;
-import domino.model.Joc;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Scanner;

@@ -6,17 +6,12 @@ package domino.vista;
 import domino.controlador.ControladorGrafic;
 import domino.model.Fitxa;
 import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import utils.VerticalLabelUI;
 
@@ -30,8 +25,6 @@ public class PanellJugador extends javax.swing.JPanel {
     private String posicio = null;
     private ArrayList<JButton> fitxes = null;
     private JPanel panelFitxes = null;
-    private ImageIcon[] imatgesFitxesVertical = null;
-    private ImageIcon[] imatgesFitxesHoritzontal = null;
     private final boolean IAControlled;
     private final boolean MostrarFitxes;
     ControladorGrafic control;
@@ -52,9 +45,9 @@ public class PanellJugador extends javax.swing.JPanel {
         inicialitza();
     }
 
-    private void omplirArrayImatgesFitxes() {
-    }
-
+    /**
+     * Inicializa el panell. es crida automaticament al fer el constructor.
+     */
     private void inicialitza() {
         userNomLabel = new VerticalLabelUI();
         //Si es un layout north o south, la posicio dels components es Y_AXIS
@@ -74,10 +67,12 @@ public class PanellJugador extends javax.swing.JPanel {
             panelFitxes.setLayout(new GridLayout(0, 1));
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
             if (posicio.equals(BorderLayout.WEST)) {
+                //Rotem els labels els jugadors est y oest.
                 userNomLabel.setRotation(utils.VerticalLabelUI.ROTATE_RIGHT);
                 this.add(userNomLabel);
                 this.add(panelFitxes);
             } else {
+                //Rotem els labels els jugadors est y oest.
                 userNomLabel.setRotation(utils.VerticalLabelUI.ROTATE_LEFT);
                 this.add(panelFitxes);
                 this.add(userNomLabel);
@@ -86,23 +81,39 @@ public class PanellJugador extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Estableix el nom del jugador que es mostrara al tauler.
+     *
+     * @param nom
+     */
     public void setNomJugador(String nom) {
         this.userNomLabel.setText(nom);
     }
 
+    /**
+     * Assigna les fitxes a un jugador i les pinta per pantalla
+     *
+     * @param input llista de fitxes per pintar
+     */
     public void setFitxes(List<Fitxa> input) {
         fitxes = new ArrayList<>();
-        //System.out.println("Añadida fitxa");
         for (Fitxa fitxa : input) {
+            //Les fitxes son implementacions exteses de JButton
             BotoFitxa JBfitxa = new BotoFitxa();
+            //Totes les fitxes tenen el action command fitxa
             JBfitxa.setActionCommand("fitxa");
             if (IAControlled == false) {
+                //El listener de les fitxes les te el control
                 JBfitxa.addActionListener(control);
             }
 
+            //Si a settings em seleccionat que es mostrin les fitxes, el panell s'haura incialitzat
+            //amb mostrar fitxes a true
             if (MostrarFitxes) {
                 JBfitxa.setValue(fitxa.getValors());
                 ImageIcon icon;
+                //Mostrem les fitxes, diferenciem si es tracta d'un panell nord o sud d'un est o oest per
+                //mostrar les imatges en horitzontal o vertical.
                 if (posicio.equals(BorderLayout.NORTH) || posicio.equals(BorderLayout.SOUTH)) {
                     icon = new ImageIcon("assets/" + fitxa.getValors()[0] + fitxa.getValors()[1] + "v.png");
                 } else {
@@ -113,8 +124,7 @@ public class PanellJugador extends javax.swing.JPanel {
                 JBfitxa.setContentAreaFilled(false);
                 JBfitxa.setFocusPainted(false);
                 JBfitxa.setOpaque(false);
-
-//JBfitxa.setText((fitxa.getValors()[0]) + ":" + fitxa.getValors()[1]);
+                //Tenim la opcio de mostrar fitxes desactivada, per tant, carreguem les imatges en negre.
             } else {
                 ImageIcon icon;
                 if (posicio.equals(BorderLayout.NORTH) || posicio.equals(BorderLayout.SOUTH)) {
@@ -132,6 +142,7 @@ public class PanellJugador extends javax.swing.JPanel {
             this.fitxes.add(JBfitxa);
 
         }
+        //Si el jugador no esta controlat per la IA, afegim un botor de passar.
         if (!isIAControlled()) {
             JButton BotoPassar = new JButton();
             BotoPassar.setActionCommand("passar");
@@ -141,11 +152,17 @@ public class PanellJugador extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Obliga a llegir de not l'array de fitxes i pintar les fitxes en pantalla.
+     */
     public void repinta() {
+        //Esborrem totes les fitxes del panell
         this.panelFitxes.removeAll();
+        //Recorrem l'array y les reptintem de nou
         for (JButton fitxa : fitxes) {
             this.panelFitxes.add(fitxa);
         }
+        //Invalidem el layout, per tal qu es repinti
         this.revalidate();
         this.repaint();
     }

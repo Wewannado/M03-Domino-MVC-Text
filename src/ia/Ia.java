@@ -3,6 +3,7 @@
  */
 package ia;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import domino.model.Fitxa;
 import domino.model.Joc;
 import domino.model.Torn;
@@ -23,25 +24,31 @@ public class Ia {
         this.torn = torn;
     }
 
+    /**
+     * Cridant a aquest metode, la IA intenta llençar una fitxa al tauler, si no
+     * pot, crida automaticament al metode passar de joc.
+     */
     public void jugar() {
         List<Fitxa> llistaFitxes = joc.getJugadors()[joc.getTorn()].getFitxes();
         Boolean haTirat = false;
         for (Fitxa llistaFitxe : llistaFitxes) {
             if (torn.colocarUnaFitxa(llistaFitxe, true)) {
                 haTirat = true;
-                System.out.println("IA:"+joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
+                Logger.logMsg(Logger.DEBUG, "IA:" + joc.getTorn() + "-> Tiro Fitxa: " + llistaFitxe.toString());
                 break;
             } else if (torn.colocarUnaFitxa(llistaFitxe, true)) {
                 haTirat = true;
-                System.out.println("IA:"+joc.getTorn() +"Tiro Fitxa:"+ llistaFitxe.toString());
+                Logger.logMsg(Logger.DEBUG, "IA:" + joc.getTorn() + "-> Tiro Fitxa: " + llistaFitxe.toString());
                 break;
             }
         }
+        //Si la IA a intentat tirar totes les fitxes que te hi no ho ha aconseguit, passa el torn
         if (!haTirat) {
             torn.passar();
-            System.out.println(joc.getTorn() +"Passo");
+            Logger.logMsg(Logger.DEBUG, "IA:" + joc.getTorn() + "-> Passo");
+            System.out.println();
         }
-        
+
     }
 
 }

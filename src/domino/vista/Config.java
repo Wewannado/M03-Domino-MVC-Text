@@ -5,7 +5,6 @@ package domino.vista;
 
 import domino.controlador.ControladorGrafic;
 import static java.lang.System.err;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;

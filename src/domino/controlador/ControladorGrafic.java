@@ -6,7 +6,6 @@
 package domino.controlador;
 
 import domino.model.Fitxa;
-import domino.vista.VistaText;
 import domino.model.Joc;
 import domino.model.Torn;
 import domino.vista.BotoFitxa;
@@ -17,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JButton;
 
 /**
  *
@@ -82,10 +80,6 @@ public class ControladorGrafic implements ActionListener {
         } else {
             vista.actualitzarEstat(joc.getFitxesJugades(), joc.getJugadors()[0].getFitxes(), joc.getJugadors()[1].getFitxes(), joc.getJugadors()[2].getFitxes(), joc.getJugadors()[3].getFitxes());
         }
-//        mostrarFitxesConsola(joc.getFitxesJugades(), "Les fitxes jugades son:");
-//        System.out.println("Torn:" + joc.getTorn() + "   Jugador: " + joc.getJugadors()[joc.getTorn()].getNom());
-//        System.out.println(joc.getJugadors()[0].getFitxes());
-//        System.out.println(joc.getJugadors()[1].getFitxes());
     }
 
     @Override
@@ -94,15 +88,16 @@ public class ControladorGrafic implements ActionListener {
             inicialitzaTauler();
             iniciaPartida();
         }
+        //El bucle principal del joc. Cada vegada que es tira una fitxa es
+        //comproba si el seguent jugador esta controlat per la CPU.
+        //en cas que estigui controlat per la cpu, juga aquesta, en cas contrari
+        //es finalitza l'execució en espera que l'usuari tiri de nou.
         if (!joc.isFinalitzat()) {
             if (ae.getActionCommand().equals("fitxa")) {
                 BotoFitxa JBfitxa = (BotoFitxa) ae.getSource();
                 int[] valorsFitxa = new int[2];
                 valorsFitxa[0] = JBfitxa.getValue()[0];
                 valorsFitxa[1] = JBfitxa.getValue()[1];
-
-                //TODO la fitxa l'hem d¡btenir de l'array 
-                //
                 List<Fitxa> fitxes = joc.getJugadors()[joc.getTorn()].getFitxes();
                 System.out.println("Torn del jugador:" + joc.getTorn());
                 Fitxa fitxa = null;
@@ -116,11 +111,10 @@ public class ControladorGrafic implements ActionListener {
                     vista.mostrarMissatge("No es el teu torn.");
                 } else {
 
-                    //System.out.println("S'ha polsat una fitxa:" +fitxa.getText());  
                     if (torn.colocarUnaFitxa(fitxa, vista.demanarCostat())) {
                         refresca();
+                        //Juga la CPU fins a que es el torn del jugador.
                         while (vista.isCPUControlled(joc.getTorn())&&!joc.isFinalitzat()) {
-                            System.out.println("Li toca a la maquina");
                             Ia ia = new Ia(joc, torn);
                             ia.jugar();
                             refresca();
@@ -133,13 +127,14 @@ public class ControladorGrafic implements ActionListener {
                     vista.mostrarMissatge("Fi del joc. El guanyador es:" + joc.getGuanyador().getNom());
                 }
             }
+            
+            
             if (ae.getActionCommand().equals("passar")) {
                 System.out.println("Passem el torn.");
                 torn.passar();
                 joc.actualitzarEstat();
-                System.out.println("El nou torn es:" + joc.getTorn());
+                //Juga la IA fins que torna a tocarli al jugador
                 while (vista.isCPUControlled(joc.getTorn())&&!joc.isFinalitzat()) {
-                            System.out.println("Li toca a la maquina");
                             Ia ia = new Ia(joc, torn);
                             ia.jugar();
                             refresca();
@@ -149,7 +144,6 @@ public class ControladorGrafic implements ActionListener {
                 }
             }
         }
-
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        vista.mostrarMissatge("El joc ja ha finalitzat. No es pot seguir jugant.");
     }
 }
